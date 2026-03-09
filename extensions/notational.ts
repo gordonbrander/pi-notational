@@ -18,66 +18,27 @@ import {
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { toSlug } from "../lib/slug.ts";
-import { type Note, parseNote, serializeNote } from "../lib/note.ts";
-import { stem } from "../lib/path.ts";
+import {
+  type Note,
+  parseNote,
+  noteFileName,
+  updateNote,
+  newNote,
+} from "../lib/note.ts";
+import { resolveDir } from "../lib/path.ts";
+import { scanNotes } from "../lib/scan.ts";
 
 type NoteSearchResult =
   | { action: "open"; filePath: string }
   | { action: "create"; title: string };
 
-/** Resolve the notes directory from command args and cwd. */
-export const resolveDir = (cwd: string, args: string | undefined): string =>
-  args ? path.resolve(cwd, args.trim()) : cwd;
-
-/** Derive a .md filename from a title, or undefined if the title can't be slugified. */
-export const noteFileName = (title: string): string | undefined => {
-  const slug = toSlug(title);
-  return slug ? `${slug}.md` : undefined;
-};
-
-/** Build an updated Note from an existing note with new body content. */
-export const updateNote = (note: Note, body: string, now: string): string =>
-  serializeNote({
-    ...note,
-    content: body.trim(),
-    created: note.created ?? now,
-    updated: now,
-  });
-
-/** Build a new Note from a title and body. */
-export const newNote = (title: string, body: string, now: string): string =>
-  serializeNote({
-    title,
-    created: now,
-    updated: now,
-    content: body.trim(),
-    meta: {},
-  });
-
-/** Scan directory for .md files, returning SelectItems with frontmatter titles. */
-const scanNotes = (dir: string): SelectItem[] => {
-  try {
-    return fs
-      .readdirSync(dir)
-      .filter((f) => f.endsWith(".md"))
-      .map((f) => {
-        const filePath = path.join(dir, f);
-        try {
-          const raw = fs.readFileSync(filePath, "utf-8");
-          const note = parseNote(raw);
-          return {
-            value: f,
-            label: note.title || stem(f),
-            description: f,
-          };
-        } catch {
-          return { value: f, label: stem(f), description: f };
-        }
-      });
-  } catch {
-    return [];
-  }
-};
+/** Adapt scanned NoteItems to Pi SelectItems. */
+const toSelectItems = (dir: string): SelectItem[] =>
+  scanNotes(dir).map((n) => ({
+    value: n.fileName,
+    label: n.label,
+    description: n.fileName,
+  }));
 
 export default function (pi: ExtensionAPI): void {
   pi.registerCommand("notational", {
@@ -97,7 +58,7 @@ export default function (pi: ExtensionAPI): void {
         return;
       }
 
-      const notes = scanNotes(dir);
+      const notes = toSelectItems(dir);
 
       // Step 1: Type-ahead search / select
       const result = await ctx.ui.custom<NoteSearchResult | undefined>(
@@ -132,7 +93,7 @@ export default function (pi: ExtensionAPI): void {
               lines.push(theme.fg("accent", "─".repeat(width)));
               lines.push(
                 truncateToWidth(
-                  ` ${theme.fg("accent", theme.bold("Note"))} ${theme.fg(
+                  ` ${theme.fg("accent", theme.bold("Notational"))} ${theme.fg(
                     "dim",
                     "type to search or create",
                   )}`,
@@ -217,7 +178,7 @@ export default function (pi: ExtensionAPI): void {
       // Open existing note for editing
       if (result.action === "open") {
         const filePath = path.join(dir, result.filePath);
-        let note;
+        let note: Note;
         try {
           const raw = fs.readFileSync(filePath, "utf-8");
           note = parseNote(raw);

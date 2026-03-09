@@ -5,6 +5,9 @@
   "type": "module",
   "main": "extensions/notational.ts",
   "license": "MIT",
+  "bin": {
+    "notational": "bin/notational.ts"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gordonbrander/pi-notational"
@@ -15,7 +18,9 @@
     "coding-agent"
   ],
   "files": [
-    "extensions/archive.ts",
+    "extensions/notational.ts",
+    "lib/",
+    "bin/",
     "README.md",
     "LICENSE-MIT"
   ],

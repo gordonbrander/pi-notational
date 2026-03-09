@@ -1,36 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import * as path from "node:path";
-import { resolveDir, noteFileName, updateNote, newNote } from "./notational.ts";
-import { parseNote, type Note } from "../lib/note.ts";
-
-describe("resolveDir", () => {
-  it("returns cwd when args is undefined", () => {
-    assert.equal(resolveDir("/home/user", undefined), "/home/user");
-  });
-
-  it("returns cwd when args is empty whitespace", () => {
-    assert.equal(resolveDir("/home/user", "   "), "/home/user");
-  });
-
-  it("resolves a relative path against cwd", () => {
-    assert.equal(
-      resolveDir("/home/user", "notes"),
-      path.resolve("/home/user", "notes"),
-    );
-  });
-
-  it("returns an absolute path as-is", () => {
-    assert.equal(resolveDir("/home/user", "/tmp/notes"), "/tmp/notes");
-  });
-
-  it("trims whitespace from args", () => {
-    assert.equal(
-      resolveDir("/home/user", "  notes  "),
-      path.resolve("/home/user", "notes"),
-    );
-  });
-});
+import { noteFileName, updateNote, newNote, parseNote, type Note } from "./note.ts";
 
 describe("noteFileName", () => {
   it("returns a slugified .md filename", () => {
@@ -58,7 +28,11 @@ describe("updateNote", () => {
     created: "2026-01-01T00:00:00.000Z",
     updated: "2026-02-01T00:00:00.000Z",
     content: "old body",
-    meta: { title: "Test", created: "2026-01-01T00:00:00.000Z", updated: "2026-02-01T00:00:00.000Z" },
+    meta: {
+      title: "Test",
+      created: "2026-01-01T00:00:00.000Z",
+      updated: "2026-02-01T00:00:00.000Z",
+    },
   };
 
   it("preserves the existing created timestamp", () => {
