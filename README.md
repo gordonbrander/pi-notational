@@ -1,10 +1,10 @@
 # pi-notational
 
-> Notational Velocity for your terminal — search and create notes without friction.
+> Notational Velocity for Pi coding agent. Search and create notes without friction.
 
-A note-taking tool inspired by [Notational Velocity's](https://notational.net/) unified search-and-create flow. One text field: type to filter existing notes, press enter to open one, or keep typing to create a new one.
+A note-taking tool inspired by [Notational Velocity's](https://notational.net/) unified search-and-create flow. Type-ahead search over notes. Press enter to open an existing note, or keep typing to create a new note.
 
-Works as a standalone CLI and as a [Pi](https://github.com/mariozechner/pi-coding-agent) coding agent extension.
+Works as a [Pi](https://github.com/mariozechner/pi-coding-agent) coding agent extension or a standalone CLI.
 
 ## Install
 
