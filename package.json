@@ -1,0 +1,58 @@
+{
+  "name": "@gordonb/pi-notational",
+  "version": "0.1.0",
+  "description": "Notational Velocity command for Pi coding agent",
+  "type": "module",
+  "main": "extensions/notational.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gordonbrander/pi-notational"
+  },
+  "keywords": [
+    "pi-package",
+    "memory",
+    "coding-agent"
+  ],
+  "files": [
+    "extensions/archive.ts",
+    "README.md",
+    "LICENSE-MIT"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "pi": {
+    "extensions": [
+      "extensions/notational.ts"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*",
+    "@sinclair/typebox": "*"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.1"
+  },
+  "scripts": {
+    "test": "node --test './**/*.test.ts'",
+    "lint": "eslint './**/*.ts'",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "prepublishOnly": "npm test && npm run lint"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.0.0",
+    "eslint": "^10.0.3",
+    "prettier": "^3.8.1",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.56.1"
+  }
+}
