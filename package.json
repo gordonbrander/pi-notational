@@ -36,9 +36,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@mariozechner/pi-ai": "*",
     "@mariozechner/pi-coding-agent": "*",
-    "@sinclair/typebox": "*"
+    "@mariozechner/pi-tui": "*"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

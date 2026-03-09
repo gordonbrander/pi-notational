@@ -13,7 +13,7 @@ Works as a [Pi](https://github.com/mariozechner/pi-coding-agent) coding agent ex
 Requires Node.js 22+.
 
 ```sh
-pi package add @gordonb/pi-notational
+pi install npm:@gordonb/pi-notational
 ```
 
 ### Standalone CLI
@@ -66,7 +66,6 @@ Buy box of Arm & Hammer raw cornsalt. Sprinkle on poultry before broiling.
 Notational Velocity's key insight is that **searching and creating are the same gesture**. You never have to decide up front whether you're looking for an existing note or starting a new one — just start typing. This removes the friction that keeps people from writing things down.
 
 The same principle applies inside a coding agent. Quick notes, design decisions, scratch thoughts, bookmarks — they all benefit from a flow where capture is instant and retrieval is just as fast.
-
 
 ### Standalone CLI
 
