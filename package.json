@@ -1,7 +1,7 @@
 {
   "name": "@gordonb/pi-notational",
   "version": "0.1.0",
-  "description": "Notational Velocity command for Pi coding agent",
+  "description": "Notational Velocity for Pi coding agent",
   "type": "module",
   "main": "extensions/notational.ts",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "coding-agent"
   ],
   "files": [
-    "extensions/notational.ts",
+    "extensions/",
     "lib/",
     "bin/",
     "README.md",

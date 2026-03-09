@@ -25,7 +25,7 @@ import {
   updateNote,
   newNote,
 } from "../lib/note.ts";
-import { resolveDir } from "../lib/path.ts";
+import { resolveDirUsingSettings } from "../lib/settings.ts";
 import { scanNotes } from "../lib/scan.ts";
 
 type NoteSearchResult =
@@ -49,7 +49,7 @@ export default function (pi: ExtensionAPI): void {
         return;
       }
 
-      const dir = resolveDir(ctx.cwd, args);
+      const dir = resolveDirUsingSettings(ctx.cwd, args);
 
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });

@@ -1,6 +1,12 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { noteFileName, updateNote, newNote, parseNote, type Note } from "./note.ts";
+import {
+  noteFileName,
+  updateNote,
+  newNote,
+  parseNote,
+  type Note,
+} from "./note.ts";
 
 describe("noteFileName", () => {
   it("returns a slugified .md filename", () => {

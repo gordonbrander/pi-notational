@@ -63,7 +63,7 @@ describe("scanNotes", () => {
   });
 
   it("falls back to the file stem when the title is empty", () => {
-    writeNote("hello-world.md", "---\ntitle: \"\"\n---\nbody\n");
+    writeNote("hello-world.md", '---\ntitle: ""\n---\nbody\n');
     const result = scanNotes(tmpDir);
     assert.equal(result[0].label, "hello-world");
   });
@@ -98,7 +98,11 @@ describe("scanNotes", () => {
 describe("filterNotes", () => {
   const notes: NoteItem[] = [
     { fileName: "hello-world.md", label: "Hello World", slug: "hello-world" },
-    { fileName: "cooking-tips.md", label: "Cooking Tips", slug: "cooking-tips" },
+    {
+      fileName: "cooking-tips.md",
+      label: "Cooking Tips",
+      slug: "cooking-tips",
+    },
     { fileName: "my_journal.md", label: "My Journal", slug: "my_journal" },
   ];
 

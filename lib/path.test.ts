@@ -1,32 +1,21 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import * as path from "node:path";
-import { resolveDir } from "./path.ts";
+import { stem } from "./path.ts";
 
-describe("resolveDir", () => {
-  it("returns cwd when args is undefined", () => {
-    assert.equal(resolveDir("/home/user", undefined), "/home/user");
+describe("stem", () => {
+  it("returns filename without extension", () => {
+    assert.equal(stem("notes/hello-world.md"), "hello-world");
   });
 
-  it("returns cwd when args is empty whitespace", () => {
-    assert.equal(resolveDir("/home/user", "   "), "/home/user");
+  it("returns filename when there is no extension", () => {
+    assert.equal(stem("notes/README"), "README");
   });
 
-  it("resolves a relative path against cwd", () => {
-    assert.equal(
-      resolveDir("/home/user", "notes"),
-      path.resolve("/home/user", "notes"),
-    );
+  it("handles nested paths", () => {
+    assert.equal(stem("/home/user/docs/file.txt"), "file");
   });
 
-  it("returns an absolute path as-is", () => {
-    assert.equal(resolveDir("/home/user", "/tmp/notes"), "/tmp/notes");
-  });
-
-  it("trims whitespace from args", () => {
-    assert.equal(
-      resolveDir("/home/user", "  notes  "),
-      path.resolve("/home/user", "notes"),
-    );
+  it("strips only the last extension", () => {
+    assert.equal(stem("archive.tar.gz"), "archive.tar");
   });
 });

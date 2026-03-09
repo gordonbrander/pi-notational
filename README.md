@@ -24,12 +24,21 @@ pi package add @gordonb/pi-notational
 
 ```
 notational [directory]
+notational --help
 ```
 
-Run `notational` to open the note finder. Optionally pass a directory path — defaults to the current working directory. Selected notes are opened in `$EDITOR` (falls back to `vi`).
+Run `notational` to open the note finder. Optionally pass a directory path — defaults to the current working directory. If the directory doesn't exist, it's created.
 
-```
+```sh
 notational ~/notes
+```
+
+When you select or create a note, the file is opened in `$EDITOR` (falls back to `vi`). After you save and quit your editor, you're back at the shell.
+
+```sh
+# Use with any editor
+EDITOR=nano notational ~/notes
+EDITOR="code --wait" notational ~/notes
 ```
 
 Requires Node.js 22+.
@@ -41,6 +50,23 @@ Requires Node.js 22+.
 ```
 
 The `/notational` command opens the same type-ahead finder inside Pi. Notes are edited in Pi's built-in editor.
+
+## Settings
+
+You can set a default notes directory in a `notational.json` settings file. There are two locations, checked in order:
+
+| File                          | Scope                                 |
+| ----------------------------- | ------------------------------------- |
+| `.pi/notational.json`         | Project-local (per working directory) |
+| `~/.pi/agent/notational.json` | Global (all projects)                 |
+
+```json
+{
+  "dir": "~/notes"
+}
+```
+
+The local file always wins over the global one. The `dir` field in a local settings file is resolved relative to the working directory; in the global file it is resolved as an absolute path (or relative to the process cwd, so absolute is recommended). Explicit CLI arguments and `/notational <dir>` always take priority over both settings files.
 
 ## The flow
 
