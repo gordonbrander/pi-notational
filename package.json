@@ -1,6 +1,6 @@
 {
   "name": "@gordonb/pi-notational",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Notational Velocity for Pi coding agent",
   "type": "module",
   "main": "extensions/notational.ts",
