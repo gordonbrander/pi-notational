@@ -13,6 +13,7 @@ import {
   matchesKey,
   type SelectItem,
   SelectList,
+  Text,
   truncateToWidth,
 } from "@mariozechner/pi-tui";
 import * as fs from "node:fs";
@@ -41,6 +42,16 @@ const toSelectItems = (dir: string): SelectItem[] =>
   }));
 
 export default function (pi: ExtensionAPI): void {
+  pi.registerMessageRenderer("notational", (message, _options, theme) => {
+    const details = message.details as
+      | { filePath?: string }
+      | undefined;
+    const filePath = details?.filePath ?? "";
+
+    const text = theme.bold("Noted") + " " + theme.fg("muted", filePath);
+    return new Text(text, 0, 0);
+  });
+
   pi.registerCommand("notational", {
     description: "Search or create a note",
     handler: async (args, ctx) => {
@@ -201,7 +212,12 @@ export default function (pi: ExtensionAPI): void {
           updateNote(note, body, new Date().toISOString()),
           "utf-8",
         );
-        ctx.ui.notify(`Saved ${filePath}`, "info");
+        pi.sendMessage({
+          customType: "notational",
+          content: `Note updated: ${result.filePath}`,
+          display: true,
+          details: { filePath, action: "edit" },
+        });
         return;
       }
 
@@ -228,7 +244,7 @@ export default function (pi: ExtensionAPI): void {
       }
 
       // Step 2: Write body
-      const body = await ctx.ui.editor("Write note body:", "");
+      const body = await ctx.ui.editor(`Create ${filePath}:`, "");
       if (body === undefined) {
         ctx.ui.notify("Cancelled", "info");
         return;
@@ -239,7 +255,12 @@ export default function (pi: ExtensionAPI): void {
         newNote(result.title, body, new Date().toISOString()),
         "utf-8",
       );
-      ctx.ui.notify(`Saved ${filePath}`, "info");
+      pi.sendMessage({
+        customType: "notational",
+        content: `Note created: ${fileName}`,
+        display: true,
+        details: { filePath, action: "create", title: result.title },
+      });
     },
   });
 }
