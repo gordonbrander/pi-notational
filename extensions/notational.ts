@@ -43,9 +43,7 @@ const toSelectItems = (dir: string): SelectItem[] =>
 
 export default function (pi: ExtensionAPI): void {
   pi.registerMessageRenderer("notational", (message, _options, theme) => {
-    const details = message.details as
-      | { filePath?: string }
-      | undefined;
+    const details = message.details as { filePath?: string } | undefined;
     const filePath = details?.filePath ?? "";
 
     const text = theme.bold("Noted") + " " + theme.fg("muted", filePath);
