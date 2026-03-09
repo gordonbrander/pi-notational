@@ -42,6 +42,12 @@ Opens a type-ahead finder inside Pi. Type to search. Hit enter to open or create
 
 If you type a title that happens to match an existing file's slug, the existing note is opened instead of creating a duplicate.
 
+### Why Notational Velocity?
+
+Notational Velocity's key insight is that **searching and creating are the same gesture**. You never have to decide up front whether you're looking for an existing note or starting a new one — just start typing. This removes the friction that keeps people from writing things down.
+
+The same principle applies inside a coding agent. Quick notes, design decisions, scratch thoughts, bookmarks — they all benefit from a flow where capture is instant and retrieval is just as fast.
+
 ### Note format
 
 Notes are Markdown files with YAML frontmatter:
@@ -60,12 +66,6 @@ Buy box of Arm & Hammer raw cornsalt. Sprinkle on poultry before broiling.
 - `created` — set once when the note is first written
 - `updated` — bumped on every save
 - Any additional frontmatter fields you add by hand are preserved across edits.
-
-### Why Notational Velocity?
-
-Notational Velocity's key insight is that **searching and creating are the same gesture**. You never have to decide up front whether you're looking for an existing note or starting a new one — just start typing. This removes the friction that keeps people from writing things down.
-
-The same principle applies inside a coding agent. Quick notes, design decisions, scratch thoughts, bookmarks — they all benefit from a flow where capture is instant and retrieval is just as fast.
 
 ### Standalone CLI
 
